@@ -1,0 +1,18 @@
+{
+  "name": "supertrumpf",
+  "version": "1.0.0",
+  "description": "aka Autoquartett",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap",
+    "testw": "tap -w",
+    "eslint": "eslint --fix src/**/*.js test/**/*.js"
+  },
+  "keywords": [],
+  "author": "Philipp Kursawe <phil.kursawe@gmail.com> (https://pke.github.io/)",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "6.5.1",
+    "tap": "14.7.0"
+  }
+}

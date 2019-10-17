@@ -4,6 +4,30 @@
   "title": "JSON schema for Supertrumpf",
   "type": "object",
   "definitions": {
+    "ISO3166-1-Alpha-3": {
+      "title": "ISO 3166-1 Alpha-3 Country code",
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "examples": ["CHE","DEU","FRA","DNK","JAP","GBR","USA"]
+    },
+    "country": {
+      "title": "Country",
+      "description": "A valid 3-digit ISO country code (ISO 3166-1 alpha-3), or, an array of valid ISO codes.",
+      "oneOf": [
+        { "$ref": "#/definitions/ISO3166-1-Alpha-3" },
+        { 
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/definitions/ISO3166-1-Alpha-3" } 
+        }
+      ]
+    },
+    "id": {
+      "type": "string",
+      "title": "Quartett ID",
+      "description": "From nA-nD. Usually 1A-8D for a deck of 32 cards",
+      "pattern": "^(\\d)([a-dA-B])$"
+    },
     "image": {
       "type": "string",
       "title": "An image",
@@ -15,7 +39,7 @@
         },
         {
           "type": "string",
-          "pattern": "src=\"data:image\/([a-zA-Z]*);base64,([^\"]*)\""
+          "pattern": "data:image\/([a-zA-Z]*);base64,([^\"]*)"
         }
       ]
     },
@@ -64,7 +88,7 @@
           "title": "An optional unit",
           "description": "You you specify a formatting hint",
           "examples": [
-            "MW", "t", "Mio", "m³"
+            "MW", "t", "Mio", "m³", "ccm", "U/min"
           ]
         }
       }
@@ -87,6 +111,7 @@
       "type": "object",
       "title": "A card in the game",
       "properties": {
+        "id": { "$ref": "#/definitions/id" },
         "title": {
           "type": "string",
           "title": "Name of the card",
@@ -97,6 +122,7 @@
           "description": "Short description of the cards content."
         },
         "image": { "$ref": "#/definitions/image" },
+        "country": { "$ref": "#/definitions/country" },
         "values": { "$ref": "#/definitions/values" }
       },
       "required": ["title", "values"]
@@ -104,6 +130,7 @@
   },
   "required": [
     "title",
+    "cover",
     "categories",
     "cards"
   ],
@@ -120,14 +147,15 @@
       "type": "string",
       "title": "A short description of the game"
     },
-    "image": {
+    "cover": {
       "allOf": [
         { "$ref": "#/definitions/image" },
         {
-          "title": "Image for the game"
+          "title": "Cover image for the game"
         }
       ]
     },
+    "backside": { "$ref": "#/definitions/image" },
     "categories": {
       "type": "array",
       "title": "Categories",

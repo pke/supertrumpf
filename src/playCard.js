@@ -1,6 +1,7 @@
 const getWinner = require("./winner")
 
 /**
+ * Plays a card from the top of each given deck.
  *
  * @param {Array} decks of cards
  * @param {String} rule for winning a card

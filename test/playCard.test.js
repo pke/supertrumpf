@@ -20,7 +20,6 @@ t.test("Deal even number of cards to 2 players", t => {
   var players = [player1, player2]
 
   players = playCard(players, ">", selectValue)
-
   t.same(players[0], [5,6,2,4])
   t.same(players[1], [1,3])
    

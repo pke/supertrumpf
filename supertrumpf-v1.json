@@ -1,0 +1,149 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://github.com/pke/supertrumpf/supertrumpf-v1.json",
+  "title": "JSON schema for Supertrumpf",
+  "type": "object",
+  "definitions": {
+    "image": {
+      "type": "string",
+      "title": "An image",
+      "description": "An image as URL or BASE64 data URI",
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "uri"
+        },
+        {
+          "type": "string",
+          "pattern": "src=\"data:image\/([a-zA-Z]*);base64,([^\"]*)\""
+        }
+      ]
+    },
+    "value": {
+      "title": "A numerical value",
+      "oneOf":[
+        {
+          "type": "string",
+          "enum": ["∞", "INFINITE", "infinite"]
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "array",
+          "items": { "$ref": "#/definitions/value" }
+        }
+    ]},
+    "values": {
+      "type": "array",
+      "title": "The values of this card for each category.",
+      "description": "In the same order as the categories and sub-categories represented using an array.",
+      "items": { "$ref": "#/definitions/value" }
+    },
+    "categoryText": {
+      "type": "string",
+      "title": "Short description (one word) of the category"
+    },
+    "simpleCategory": {
+      "type": "object",
+      "title": "A category",
+      "description": "It defines which value wins, lesser or smaller",
+      "required": ["text"],
+      "additionalProperties": false,
+      "properties": {
+        "text": { "$ref": "#/definitions/categoryText" },
+        "win": {
+          "type": "string",
+          "title": "Which value wins?",
+          "description": "Default: >",
+          "default": ">",
+          "enum": [">", "<"]
+        },
+        "unit": {
+          "type":"string",
+          "title": "An optional unit",
+          "description": "You you specify a formatting hint",
+          "examples": [
+            "MW", "t", "Mio", "m³"
+          ]
+        }
+      }
+    },
+    "complexCategory": {
+      "type": "object",
+      "title": "A category",
+      "description": "It defines which value wins, lesser or smaller",
+      "required": ["text", "categories"],
+      "properties": {
+        "text": { "$ref": "#/definitions/categoryText" },
+        "categories": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/definitions/simpleCategory" }
+        }
+      }
+  },
+    "card": {
+      "type": "object",
+      "title": "A card in the game",
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "Name of the card",
+          "minLength": 1
+        },
+        "desc": {
+          "type": "string",
+          "description": "Short description of the cards content."
+        },
+        "image": { "$ref": "#/definitions/image" },
+        "values": { "$ref": "#/definitions/values" }
+      },
+      "required": ["title", "values"]
+    }
+  },
+  "required": [
+    "title",
+    "categories",
+    "cards"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "title": "Schema to use"
+    },
+    "title": {
+      "type": "string",
+      "title": "Name of the game"
+    },
+    "description": {
+      "type": "string",
+      "title": "A short description of the game"
+    },
+    "image": {
+      "allOf": [
+        { "$ref": "#/definitions/image" },
+        {
+          "title": "Image for the game"
+        }
+      ]
+    },
+    "categories": {
+      "type": "array",
+      "title": "Categories",
+      "minItems": 1,
+      "items": { 
+        "oneOf": [
+          { "$ref": "#/definitions/complexCategory" },
+          { "$ref": "#/definitions/simpleCategory" }
+        ]
+      }
+    },
+    "cards": {
+      "type": "array",
+      "title": "Cards of the game",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/card" }
+    }
+  }
+}

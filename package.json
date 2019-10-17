@@ -4,8 +4,8 @@
   "description": "aka Autoquartett",
   "main": "index.js",
   "scripts": {
-    "test": "tap",
-    "testw": "tap -w",
+    "test": "tap --no-esm --color --reporter=terse",
+    "testw": "npm t -- --watch",
     "eslint": "eslint --fix src/**/*.js test/**/*.js"
   },
   "keywords": [],

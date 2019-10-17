@@ -19,3 +19,8 @@ t.only("parse normal numbers", t => {
   t.is(parseNumber(666.0), 666.0)
   t.end()
 })
+
+t.only("parse invalid number input", t => {
+  t.plan(1)
+  t.same(parseNumber(), NaN)
+})

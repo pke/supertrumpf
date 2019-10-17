@@ -2,7 +2,10 @@ function parseNumber(input) {
   if (typeof input === "number") {
     return input
   }
-  input = input.trim().toLowerCase()
+  if (undefined === input) {
+    return NaN
+  }
+  input = input.toString().trim().toLowerCase()
   if ("∞" === input || "inf" === input || "infinite" === input) {
     return Number(global.Infinity)
   }

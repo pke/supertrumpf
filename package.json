@@ -4,7 +4,7 @@
   "description": "aka Autoquartett",
   "main": "index.js",
   "scripts": {
-    "test": "tap --no-esm --color --reporter=terse",
+    "test": "tap --color --reporter=terse",
     "testw": "npm t -- --watch",
     "eslint": "eslint --fix src/**/*.js test/**/*.js"
   },
@@ -12,7 +12,7 @@
   "author": "Philipp Kursawe <phil.kursawe@gmail.com> (https://pke.github.io/)",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "6.5.1",
-    "tap": "14.7.0"
+    "eslint": "8.57.1",
+    "tap": "18.8.0"
   }
 }

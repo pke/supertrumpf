@@ -9,7 +9,7 @@ t.test("shuffle must not mutate the handed in array", t => {
   // items not a mutated reference
   // This also serves as code coverage for the shuffle functions default 
   // argument assignment
-  t.isNot(shuffle(items), items)
+  t.not(shuffle(items), items)
 })
 
 t.test("shuffle cards", t => {
